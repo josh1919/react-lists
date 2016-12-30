@@ -20455,6 +20455,76 @@ module.exports = require('./lib/React');
 
 },{"./lib/React":155}],178:[function(require,module,exports){
 var React = require('react');
+var ReactDOM = require('react-dom');
+var ListManager = require('./ListManager.jsx');
+
+var AddNewList = React.createClass({
+  displayName: 'AddNewList',
+
+
+  getInitialState: function () {
+    return { items: [], newItemText: '' };
+  },
+
+  onChange: function (e) {
+    this.setState({ newItemText: e.target.value });
+  },
+
+  handleSubmit: function (e) {
+    e.preventDefault();
+
+    var currentItems = this.state.items;
+
+    currentItems.push(this.state.newItemText);
+
+    this.setState({ items: currentItems, newItemText: '' });
+
+    ReactDOM.render(React.createElement(ListManager, { title: this.state.newItemText }), document.getElementById('lists'));
+  },
+
+  render: function () {
+    return React.createElement(
+      'div',
+      { className: 'sm-col-10' },
+      React.createElement(
+        'div',
+        { className: 'panel' },
+        React.createElement(
+          'div',
+          { className: 'row' },
+          React.createElement(
+            'h1',
+            null,
+            this.props.title
+          ),
+          React.createElement(
+            'form',
+            { onSubmit: this.handleSubmit },
+            React.createElement(
+              'div',
+              { className: 'col-sm-9' },
+              React.createElement('input', { className: 'form-control', onChange: this.onChange, value: this.state.newItemText })
+            ),
+            React.createElement(
+              'div',
+              { className: 'col-sm-2' },
+              React.createElement(
+                'button',
+                { className: 'btn btn-primary' },
+                'Add'
+              )
+            )
+          )
+        )
+      )
+    );
+  }
+});
+
+module.exports = AddNewList;
+
+},{"./ListManager.jsx":181,"react":177,"react-dom":26}],179:[function(require,module,exports){
+var React = require('react');
 var ListItem = require('./ListItem.jsx');
 
 var List = React.createClass({
@@ -20476,7 +20546,7 @@ var List = React.createClass({
 
 module.exports = List;
 
-},{"./ListItem.jsx":179,"react":177}],179:[function(require,module,exports){
+},{"./ListItem.jsx":180,"react":177}],180:[function(require,module,exports){
 var React = require('react');
 
 var ListItem = React.createClass({
@@ -20497,7 +20567,7 @@ var ListItem = React.createClass({
 
 module.exports = ListItem;
 
-},{"react":177}],180:[function(require,module,exports){
+},{"react":177}],181:[function(require,module,exports){
 var React = require('react');
 var List = require('./List.jsx');
 
@@ -20576,13 +20646,15 @@ var ListManager = React.createClass({
 
 module.exports = ListManager;
 
-},{"./List.jsx":178,"react":177}],181:[function(require,module,exports){
+},{"./List.jsx":179,"react":177}],182:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 var ListManager = require('./components/ListManager.jsx');
+var AddNewList = require('./components/AddNewList.jsx');
 
-ReactDOM.render(React.createElement(ListManager, { title: 'Ingredients' }), document.getElementById('ingredients'));
-ReactDOM.render(React.createElement(ListManager, { title: 'ToDo' }), document.getElementById('todo'));
-ReactDOM.render(React.createElement(ListManager, { title: 'Christmas', headingColor: '#b31217' }), document.getElementById('christmas'));
+ReactDOM.render(React.createElement(AddNewList, { title: 'Add a new list' }), document.getElementById('newlist'));
+// ReactDOM.render(<ListManager title = "Ingredients" />, document.getElementById('ingredients'));
+// ReactDOM.render(<ListManager title="ToDo" />, document.getElementById('todo'));
+// ReactDOM.render(<ListManager title="Christmas" headingColor="#b31217"/>, document.getElementById('christmas'));
 
-},{"./components/ListManager.jsx":180,"react":177,"react-dom":26}]},{},[181]);
+},{"./components/AddNewList.jsx":178,"./components/ListManager.jsx":181,"react":177,"react-dom":26}]},{},[182]);
