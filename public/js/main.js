@@ -20456,30 +20456,30 @@ module.exports = require('./lib/React');
 },{"./lib/React":155}],178:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
-var ListManager = require('./ListManager.jsx');
+var ListOfListManagers = require('./ListOfListManagers.jsx');
 
 var AddNewList = React.createClass({
   displayName: 'AddNewList',
 
 
   getInitialState: function () {
-    return { items: [], newItemText: '' };
+    return { Lists: [], newListText: '' };
   },
 
   onChange: function (e) {
-    this.setState({ newItemText: e.target.value });
+    this.setState({ newListText: e.target.value });
   },
 
   handleSubmit: function (e) {
     e.preventDefault();
 
-    var currentItems = this.state.items;
+    var currentLists = this.state.Lists;
 
-    currentItems.push(this.state.newItemText);
+    currentLists.push(this.state.newListText);
 
-    this.setState({ items: currentItems, newItemText: '' });
+    this.setState({ Lists: currentLists, newListText: '' });
 
-    ReactDOM.render(React.createElement(ListManager, { title: this.state.newItemText }), document.getElementById('lists'));
+    return ReactDOM.render(React.createElement(ListOfListManagers, { myLists: this.state.Lists }), document.getElementById('lists'));
   },
 
   render: function () {
@@ -20503,7 +20503,7 @@ var AddNewList = React.createClass({
             React.createElement(
               'div',
               { className: 'col-sm-9' },
-              React.createElement('input', { className: 'form-control', onChange: this.onChange, value: this.state.newItemText })
+              React.createElement('input', { className: 'form-control', onChange: this.onChange, value: this.state.newListText })
             ),
             React.createElement(
               'div',
@@ -20511,7 +20511,7 @@ var AddNewList = React.createClass({
               React.createElement(
                 'button',
                 { className: 'btn btn-primary' },
-                'Add'
+                'Add New List'
               )
             )
           )
@@ -20519,11 +20519,12 @@ var AddNewList = React.createClass({
       )
     );
   }
+
 });
 
 module.exports = AddNewList;
 
-},{"./ListManager.jsx":181,"react":177,"react-dom":26}],179:[function(require,module,exports){
+},{"./ListOfListManagers.jsx":182,"react":177,"react-dom":26}],179:[function(require,module,exports){
 var React = require('react');
 var ListItem = require('./ListItem.jsx');
 
@@ -20649,12 +20650,41 @@ module.exports = ListManager;
 },{"./List.jsx":179,"react":177}],182:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
+var ListManager = require('./ListManager.jsx');
+
+var ListOfListManagers = React.createClass({
+  displayName: 'ListOfListManagers',
+
+  //test render function
+  getInitialState: function () {
+    return { listOfLists: [this.props.myLists] };
+  },
+  componentWillReceiveProps: function () {
+    this.state.listOfLists = this.props.myLists;
+  },
+  render: function () {
+
+    var myListLoop = function (listName, index) {
+      return React.createElement(ListManager, { key: index + listName, title: listName });
+    };
+
+    return React.createElement(
+      'div',
+      null,
+      this.state.listOfLists.map(myListLoop)
+    );
+  }
+
+});
+
+module.exports = ListOfListManagers;
+
+},{"./ListManager.jsx":181,"react":177,"react-dom":26}],183:[function(require,module,exports){
+var React = require('react');
+var ReactDOM = require('react-dom');
 var ListManager = require('./components/ListManager.jsx');
 var AddNewList = require('./components/AddNewList.jsx');
 
-ReactDOM.render(React.createElement(AddNewList, { title: 'Add a new list' }), document.getElementById('newlist'));
-// ReactDOM.render(<ListManager title = "Ingredients" />, document.getElementById('ingredients'));
-// ReactDOM.render(<ListManager title="ToDo" />, document.getElementById('todo'));
-// ReactDOM.render(<ListManager title="Christmas" headingColor="#b31217"/>, document.getElementById('christmas'));
+ReactDOM.render(React.createElement(AddNewList, { title: 'Add a new list' }), document.getElementById('addnewlist'));
 
-},{"./components/AddNewList.jsx":178,"./components/ListManager.jsx":181,"react":177,"react-dom":26}]},{},[182]);
+},{"./components/AddNewList.jsx":178,"./components/ListManager.jsx":181,"react":177,"react-dom":26}]},{},[183]);

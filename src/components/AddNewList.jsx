@@ -1,28 +1,27 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var ListManager = require('./ListManager.jsx')
+var ListOfListManagers = require('./ListOfListManagers.jsx');
 
 var AddNewList = React.createClass({
 
   getInitialState: function() {
-    return {items:[], newItemText:''};
+    return {Lists:[], newListText:''};
   },
 
   onChange: function(e){
-    this.setState({newItemText: e.target.value});
+    this.setState({newListText: e.target.value});
   },
 
   handleSubmit: function(e) {
     e.preventDefault();
 
-    var currentItems = this.state.items;
+    var currentLists = this.state.Lists;
 
-    currentItems.push(this.state.newItemText);
+    currentLists.push(this.state.newListText);
 
-    this.setState({items: currentItems, newItemText:''});
+    this.setState({Lists: currentLists, newListText:''});
 
-    ReactDOM.render(<ListManager title={this.state.newItemText} />, document.getElementById('lists'));
-
+  return ReactDOM.render(<ListOfListManagers myLists={this.state.Lists} />, document.getElementById('lists'));
   },
 
   render: function() {
@@ -31,19 +30,20 @@ var AddNewList = React.createClass({
         <div className="panel">
           <div className="row">
             <h1>{this.props.title}</h1>
-              <form onSubmit={this.handleSubmit}>
-                <div className="col-sm-9">
-                  <input className="form-control" onChange={this.onChange} value={this.state.newItemText} />
-                </div>
-                <div className="col-sm-2">
-                  <button className="btn btn-primary">Add</button>
-                </div>
-              </form>
+            <form onSubmit={this.handleSubmit}>
+              <div className="col-sm-9">
+                <input className="form-control" onChange={this.onChange} value={this.state.newListText} />
+              </div>
+              <div className="col-sm-2">
+                <button className="btn btn-primary">Add New List</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
-);
+    );
   }
+
 });
 
 module.exports = AddNewList;
