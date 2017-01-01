@@ -14,7 +14,8 @@ var AddNewList = React.createClass({
 
   handleSubmit: function(e) {
     e.preventDefault();
-
+//should only update if value of proposed list is NOT empty
+    if(this.state.newListText != ""){
     var currentLists = this.state.Lists;
 
     currentLists.push(this.state.newListText);
@@ -22,6 +23,7 @@ var AddNewList = React.createClass({
     this.setState({Lists: currentLists, newListText:''});
 
   return ReactDOM.render(<ListOfListManagers myLists={this.state.Lists} />, document.getElementById('lists'));
+  }
   },
 
   render: function() {
