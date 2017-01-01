@@ -10,12 +10,17 @@ var ListManager = React.createClass({
   },
   handleSubmit: function(e) {
     e.preventDefault();
+//Add list item only if the itmem is not empty
+  if(this.state.newItemText != ""){
 
     var currentItems = this.state.items;
 
     currentItems.push(this.state.newItemText);
 
     this.setState({items: currentItems, newItemText:''});
+  } else {
+    alert("You cannot have an empty list item");
+  }
   },
   render: function() {
 
