@@ -30,11 +30,15 @@ var AddNewList = React.createClass({
   },
 
   render: function() {
+    var divStyle = {
+      padding:20
+    }
+
     return (
       <div className="sm-col-10">
         <div className="panel">
           <div className="row">
-            <h1>{this.props.title}</h1>
+            <h1 style ={divStyle}>{this.props.title}</h1>
             <form onSubmit={this.handleSubmit}>
               <div className="col-sm-9">
                 <input className="form-control" onChange={this.onChange} value={this.state.newListText} />

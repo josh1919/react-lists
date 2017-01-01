@@ -20487,6 +20487,10 @@ var AddNewList = React.createClass({
   },
 
   render: function () {
+    var divStyle = {
+      padding: 20
+    };
+
     return React.createElement(
       'div',
       { className: 'sm-col-10' },
@@ -20498,7 +20502,7 @@ var AddNewList = React.createClass({
           { className: 'row' },
           React.createElement(
             'h1',
-            null,
+            { style: divStyle },
             this.props.title
           ),
           React.createElement(
@@ -20613,7 +20617,7 @@ var ListManager = React.createClass({
 
     return React.createElement(
       'div',
-      { style: divStyle, className: 'col-sm-4' },
+      { style: divStyle, className: 'col-xs-12 col-sm-6 col-md-4' },
       React.createElement(
         'div',
         { className: 'panel panel-primary' },
