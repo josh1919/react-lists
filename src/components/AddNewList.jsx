@@ -23,7 +23,10 @@ var AddNewList = React.createClass({
     this.setState({Lists: currentLists, newListText:''});
 
   return ReactDOM.render(<ListOfListManagers myLists={this.state.Lists} />, document.getElementById('lists'));
-  }
+} else {
+  alert("You must enter a name for your list");
+
+}
   },
 
   render: function() {
